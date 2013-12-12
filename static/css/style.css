@@ -1,0 +1,58 @@
+@import url(http://fonts.googleapis.com/css?family=Fredoka+One|Droid+Sans);
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #8CB3DD;
+    font-family: Droid Sans;
+}
+
+#wrapper {
+    width: 700px;
+    margin: 15px auto 0px auto;
+}
+
+.card {
+    padding: 50px;
+    background: #fff;
+    border-radius: 15px;
+    height: 250px;
+    font-size: 24px;
+    text-align: center;
+}
+
+h1.title {
+    font-family: Fredoka One;
+    font-size: 54px;
+    color: #B80542;
+    margin: 0 0 25px 0;
+    text-align: center;
+}
+
+.fl_left { float: left; }
+.fl_right { float: right; }
+
+.button {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    width: 170px;
+    text-align: center;
+    background: #fff;
+    border-radius: 15px;
+}
+
+.center {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 340px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.footer {
+    clear: both;
+    color: #333;
+    font-style: italic;
+}

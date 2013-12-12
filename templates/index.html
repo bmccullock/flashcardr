@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class = "card">
+    <div class = "card_item">
+        <p>Welcome to Flashcardr!</p>
+        <p>Choose your question set and click start to begin your study session.</p>
+
+        <select>
+            <option value="" disabled="disabled" selected="selected">Please choose a question set</option>
+            <option value="1">Test Set</option>
+        </select>
+
+        <p><a href="/quiz">Start</a></p>
+    </div>
+</div>
+{% endblock %}

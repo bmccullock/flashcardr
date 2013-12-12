@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<script>
+    $(document).ready(function(){
+        // Check if the card has already been flipped and reverse if so,
+        // flip normally and add class otherwise
+        $(".card").click(function(){
+            if ($(".card").hasClass("flipped")){
+                $(".card").flippyReverse().removeClass("flipped");
+            }         
+            $(".card").flippy({
+                duration: "400",
+                color_target: "white",
+                depth: "0",
+                light: "0",
+                verso: {{ answer|safe }}
+            }).addClass("flipped");              
+        })
+    });
+</script>
+
+<div class = "card_cont">
+    <div class = "card">
+        <p>{{ question }}</p>
+    </div>
+</div>
+<!-- Control Buttons -->
+<p>Currently working on Test Set. Created by: BM</p>
+<div id = "show_answer" class = "show_answer revert button fl_right">
+    <p>Show Answer</p>
+</div>
+<div class = "button center fl_right">
+    <p><a href="/quiz">New Card</a></p>
+</div>
+<div id = "show_question" class = "show_question button fl_right">
+    <p class = "show_answer">Show Question</p>
+</div>
+
+{% endblock %}
