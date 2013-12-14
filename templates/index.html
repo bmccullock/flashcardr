@@ -6,12 +6,21 @@
         <p>Welcome to Flashcardr!</p>
         <p>Choose your question set and click start to begin your study session.</p>
 
-        <select>
+        <select id="setSelect">
             <option value="" disabled="disabled" selected="selected">Please choose a question set</option>
-            <option value="1">Test Set</option>
+            {% for s in question_sets %}
+                <option value="{{ s.id }}">{{ s.name }}</option>
+            {% endfor %}
         </select>
-
-        <p><a href="/quiz">Start</a></p>
+        
+        <p><a class="launch" href="">Start</a></p>
+        <script>
+            $( ".launch" ).click(function() {
+                var val = "/quiz-" + $( "#setSelect" ).val();
+                $( ".launch" ).attr("href", val);
+            });
+        </script>
+        
     </div>
 </div>
 {% endblock %}

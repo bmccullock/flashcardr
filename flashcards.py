@@ -8,22 +8,26 @@
 
 import random
 import json
-from flask import Flask, render_template
+import os
+from flask import Flask, render_template, request, session, g, redirect, \
+    abort, url_for
+from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config.from_object('config')
+db = SQLAlchemy(app)
 
-class Set:
+import models
+
+class Quiz:
     '''Collection of flashcards for study'''
 
-    def __init__(self):
-        self.cards = []
+    def __init__(self, quiz_id):
+        self.name = models.Quiz.query.get(quiz_id).name
+        self.cards = models.Card.query.filter_by(quiz = quiz_id).all()     
 
     def __repr__(self):
-        return '<Set object containing %d flashcards>' % len(self.cards)
-
-    def load(self, questions_dict):
-        for k in iter(questions):
-            self.cards.append(Card(self, k, questions[k]))
+        return '<Quiz object containing %d flashcards>' % len(self.cards)
 
     def show_all(self):
         for c in self.cards:
@@ -32,46 +36,22 @@ class Set:
     def get_card(self):
         return random.choice(self.cards)
 
-class Card(object):
-    '''A single flashcard with a question and an answer'''
-
-    def __init__(self, card_set, question, answer):
-        self.question = question
-        self.answer = answer
-
-    def __str__(self):
-        return '%s >> %s' % (self.question, self.answer)
-
-    def question(self):
-        return self.question
-
-    def answer(self):
-        return self.answer
-
-questions = {
-    'What color is an orange?': 'Orange',
-    'How many toes on a sloth?': 'Three',
-    'How far is the Earth from the Sun?': '1 A.U.',
-    '37 + 15': '52',
-    'Spell a C7 chord': 'C-E-G-Bb',
-    'What day comes before Saturday?': 'Friday'
-}
-
 
 @app.route('/')
 def show_card():
-    return render_template('index.html')
+    return render_template('index.html', question_sets = question_sets)
 
-@app.route('/quiz')
-def quiz():
-    card = working_set.get_card()
-    question = card.question
-    answer = card.answer
-    return render_template('card.html', question = question, answer = json.dumps(answer))
+@app.route('/quiz-<int:quiz_id>')
+def quiz(quiz_id):    
+    quiz = Quiz(quiz_id)
+    card = quiz.get_card()
+    return render_template('card.html', question = card.question, 
+        answer = json.dumps(card.answer), name = quiz.name)
 
 if __name__ == '__main__':
-    working_set = Set()
-    working_set.load(questions)
+    #working_set = Quiz()
+    #working_set.load(questions)
+    question_sets = models.Quiz.query.all()
     app.run(debug = True)
 
 
